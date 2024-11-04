@@ -1,7 +1,3 @@
-<?php
-require_once "config.php";
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +13,18 @@ require_once "config.php";
 
         #myTable {
             margin-top: 50px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 25px;
         }
 
-        /*  
+
+        #cabecalho-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
         #tableContainer {
             max-height: 400px;
             overflow-y: auto;
@@ -30,6 +35,7 @@ require_once "config.php";
             margin-top: 20px;
             background-color: #f8f9fa;
         }
+
         table {
             width: 100%;
             margin-bottom: 0;
@@ -44,7 +50,7 @@ require_once "config.php";
             vertical-align: middle;
         }
 
-        */
+
 
         /* Botões */
         #btnedit {
@@ -78,25 +84,49 @@ require_once "config.php";
 </head>
 
 <body>
-    <div class="container" >
-        <!-- Botão para voltar à tela de cadastro -->
-        <a href="add.php" class="btn" id="btnBack">Adcionar</a>
+    <?php
+    require_once "config.php";
+    $lista = [];
+    $sql = $pdo->query("SELECT * FROM crud_pdo.users");
+    if ($sql->rowCount() > 0) {
+        $lista = $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+
+    ?>
+    <div class="container" id="myTable">
+        <div id="cabecalho-container">
+            <h3>Usuários cadastrados</h3>
+            <a href="add.php" class="btn" id="btnBack">Novo <i class="fa-regular fa-square-plus"></i></a>
+        </div>
         <div id="tableContainer">
-            <h3>users cadastrados</h3>
             <table class="table table-striped" style=" margin-top: 40px; ">
                 <thead>
                     <tr>
-                        <th scope="col">id usuer</th>
+                        <th scope="col">ID <i class="fa-solid fa-users"></i></th>
                         <th scope="col">Name user</th>
                         <th scope="col">email</th>
+                        <th scope="col">Data de registro</th>
                         <th scope="col">Ação</th>
                     </tr>
                 </thead>
+                <?php foreach ($lista as $user): ?>
+                    <tr>
+                        <td><?php echo $user['idusers']; ?></td>
+                        <td><?php echo $user['name']; ?></td>
+                        <td><?php echo $user['email']; ?></td>
+                        <td><?php echo $user['register']; ?></td>
+                        <td>
+                            <a href="edit.php?id=<? $user['idusers']; ?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="excluir.php?id=<? $user['idusers']; ?>"><i class="fa-solid fa-trash"></i></a>
+
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </table>
         </div>
     </div>
-
+    <script src="https://kit.fontawesome.com/635eae0cd0.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
