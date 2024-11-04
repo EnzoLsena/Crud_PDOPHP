@@ -117,8 +117,8 @@
                         <td><?php echo $user['email']; ?></td>
                         <td><?php echo $user['register']; ?></td>
                         <td>
-                            <a href="edit.php?id=<? $user['idusers']; ?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="excluir.php?id=<? $user['idusers']; ?>"><i class="fa-solid fa-trash"></i></a>
+                            <a href="edit.php?id=<?php echo $user['idusers'];?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="excluir.php?id=<?php echo $user['idusers'];?>" onclick="return confirm('Tem certeza que desja excluir?');"><i class="fa-solid fa-trash"></i></a>
 
                         </td>
                     </tr>
